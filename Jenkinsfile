@@ -9,15 +9,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Pull latest code from GitHub into Jenkins workspace
-                git branch: 'main',
+                git branch: 'master',
                     url: 'https://github.com/aakash-1004/flask-mongo-app.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Install Python packages using the app's virtualenv
                 sh '''
                     cd ${APP_DIR}
                     ${VENV_DIR}/bin/pip install -r requirements.txt
@@ -26,13 +24,15 @@ pipeline {
         }
 
         stage('Deploy') {
-    steps {
-        sh '''
-            sudo -u ubuntu cp -r ${WORKSPACE}/* /home/ubuntu/apps/flask-app/
-            sudo -u ubuntu /usr/lib/node_modules/pm2/bin/pm2 restart flask-app
-        '''
+            steps {
+                sh '''
+                    sudo -u ubuntu cp -r ${WORKSPACE}/* /home/ubuntu/apps/flask-app/
+                    sudo -u ubuntu /usr/lib/node_modules/pm2/bin/pm2 restart flask-app
+                '''
+            }
+        }
     }
-}
+
     post {
         success {
             echo 'Flask deployment successful'
