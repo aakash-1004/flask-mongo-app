@@ -26,16 +26,13 @@ pipeline {
         }
 
         stage('Deploy') {
-            steps {
-                // Copy updated code to app directory and restart via PM2
-                sh '''
-                    cp -r ${WORKSPACE}/* ${APP_DIR}/
-                    pm2 restart flask-app
-                '''
-            }
-        }
+    steps {
+        sh '''
+            sudo -u ubuntu cp -r ${WORKSPACE}/* /home/ubuntu/apps/flask-app/
+            sudo -u ubuntu /usr/lib/node_modules/pm2/bin/pm2 restart flask-app
+        '''
     }
-
+}
     post {
         success {
             echo 'Flask deployment successful'
