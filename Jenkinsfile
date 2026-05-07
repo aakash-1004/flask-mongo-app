@@ -17,8 +17,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                    cd ${APP_DIR}
-                    ${VENV_DIR}/bin/pip install -r requirements.txt
+                    # Install from workspace where requirements.txt was just pulled
+                    ${VENV_DIR}/bin/pip install -r ${WORKSPACE}/requirements.txt
                 '''
             }
         }
@@ -26,7 +26,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    sudo -u ubuntu cp -r ${WORKSPACE}/* /home/ubuntu/apps/flask-app/
+                    # Copy new code to app directory
+                    sudo -u ubuntu cp -r ${WORKSPACE}/* ${APP_DIR}/
+                    # Restart app
                     sudo -u ubuntu /usr/lib/node_modules/pm2/bin/pm2 restart flask-app
                 '''
             }
