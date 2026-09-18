@@ -3,3 +3,6 @@ pymongo
 python-dotenv
 flask-cors
 gunicorn
+pytest
+pytest
+pytest
