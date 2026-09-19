@@ -96,14 +96,17 @@ docker run -d \
 
 ---
 
+## ✅ Running Tests
+
+pip install -r requirements.txt
+pytest test_app.py -v
 ## 🔐 Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `MONGO_URI` | MongoDB Atlas connection string |
-| `MONGO_DB` | Database name |
-| `MONGO_COLLECTION` | Collection name |
-
+| Variable | Description | Required? |
+|---|---|---|
+| `MONGO_URI` | MongoDB Atlas connection string | Yes |
+| `MONGO_DB` | Database name | No — defaults to `flaskapp` |
+| `MONGO_COLLECTION` | Collection name | No — defaults to `submissions` |
 ---
 
 ## 📁 Project Structure
