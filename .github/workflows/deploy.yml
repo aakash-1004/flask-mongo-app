@@ -20,7 +20,12 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run tests
+        env:
+          MONGO_URI: mongodb://localhost:27017
+          MONGO_DB: test_db
+          MONGO_COLLECTION: test_collection
         run: pytest test_app.py -v
+     
 
   build-and-push:
     runs-on: ubuntu-latest
